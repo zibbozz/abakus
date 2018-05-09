@@ -89,26 +89,29 @@ function add(row, value){ //Row = angesprochene Reihe, Value = Anzahl der Kugeln
 	}
 
 	/*function sub(row, value){ //Row = angesprochene Reihe, Value = Anzahl der Kugeln die verschoben werden sollen
-		if (value < getAmount()) {
-		let amount = getRowAmount(row);
-		let aktuelleReihe = 10*row;
-		if (amount - value > 0) {
-				movesub(aktuelleReihe+9);
-				setTimeout(function(){
-					movesub(aktuelleReihe - (10 - (value + amount)));
-				}, 350);
-			} else {
-				movesub(aktuelleReihe - (10 - (value + amount)));
+			if (value < getAmount()) {
+			let amount = getRowAmount(row);
+			let aktuelleReihe = 10*row;
+			if (amount - value <= 0) {
+					move(aktuelleReihe+9);
+					setTimeout(function(){
+						move(aktuelleReihe + (10 - (value - amount)));
+					}, 350);
+				} else {
+					move(aktuelleReihe - (10 - (value - amount)));
+				}
 			}
-		}
-		else {
-			//Fehler
-		}
-	}*/
+			else {
+				//Fehler
+			}
+		}*/
 
 function move(index){
 	let element = index % 10;
 	let row = Math.floor(index / 10);
+	if (row < 5 && element == 0) {
+
+
 			if(element == 0 && getRowAmount(row)<10){
 				if(getRowAmount(row +1)<10){
 				for(i = element; i < 10; i++){
@@ -122,12 +125,13 @@ function move(index){
 					}
 					add(row+1, 1);
 				}, 350);
-			} else{
+			} else{//??testen
 				for(i = element; i < 10; i++){
 					rows[row-1][i].style.left = (i * 4 + 60) + "%";
 					rows[row-1][i].classList.add("active");
 				}
 			}
+		}
 			} else if(rows[row-1][element].classList.contains("active")){
 				for(i = element; i >= 0; i--){
 					rows[row-1][i].style.left = (i * 4) + "%";
