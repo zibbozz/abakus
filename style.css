@@ -1,12 +1,11 @@
 body{
 	margin:0px;
-	background-color:#666666;
 }
 
 #abakus{
 	position:absolute;
 	left:0px;
-	top:0px;
+	top:60px;
 	height:500px;
 	width:800px;
 }
@@ -83,7 +82,7 @@ body{
 #valueBox{
 	position:absolute;
 	left:0px;
-	top:500px;
+	top:30px;
 	width:800px;
 	text-align:center;
 	height:30px;
@@ -92,7 +91,7 @@ body{
 #addBox{
 	position:absolute;
 	left:0px;
-	top:530px;
+	top:600px;
 	width:800px;
 	height:30px;
 }

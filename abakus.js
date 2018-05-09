@@ -9,6 +9,7 @@ let row1 = [],
   row5 = [],
   rows = [];
 let value = document.getElementById("value");
+let value2 = document.getElementById("value2");
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -66,19 +67,20 @@ function getRowAmount(index) {
 
 function refresh() {
   value.innerHTML = getAmount();
+  value2.innerHTML = getAmount();
 }
 
 async function totalAdd(value) {
 	// Wieso replace hier nicht möglich?   #Frage
   if (value[0] == '-' && (getAmount()+parseInt(value))>= 0) {
     for (let i = 1; i < value.length; i++) {
-      sub(i, parseInt(value.charAt(value.length-(i))));
-			await sleep(350);
+      await sub(i, parseInt(value.charAt(value.length-(i))));
+			//await sleep(500);
     }
   } else if ((value[0] == '+')&&(parseInt(value)+getAmount())<= 111110) {
     for (let i = 0; i < value.length; i++) {
-	 		add(i, parseInt(value.charAt(value.length - (i))));
-			await sleep(350);
+	 		await add(i, parseInt(value.charAt(value.length - (i))));
+			//await sleep(350);
     }
   }else if(parseInt(value)+getAmount() > 111110){
 		alert("Darf den gesamten Wert von 111110 nicht überschreiten!");
@@ -91,36 +93,38 @@ async function totalAdd(value) {
 }
 
 async function add(row, value) { //Row = angesprochene Reihe, Value = Anzahl der Kugeln die verschoben werden sollen
-  if (value > 0 && row > 0) {
+  if (value > 0 && row > 0 && row <= 5) {
     let amount = getRowAmount(row);
     let aktuelleReihe = 10 * row;
     if (amount + value > 10) {
-      move(aktuelleReihe);
-      await sleep(350);
+      await move(aktuelleReihe);
+      //await sleep(350);
       value -= (10 - amount);
-      move(aktuelleReihe + (10 - value));
+      await move(aktuelleReihe + (10 - value));
     } else {
       move(aktuelleReihe + (10 - (value + amount)));
     }
   }
+  return new Promise(resolve => setTimeout(resolve, 350));
 }
 
 async function sub(row, value) { //Row = angesprochene Reihe, Value = Anzahl der Kugeln die verschoben werden sollen
-  if (value > 0 && row > 0) {
+  if (value > 0 && row > 0 && row <= 5) {
     let amount = getRowAmount(row);
     let aktuelleReihe = 10 * row;
     if (amount - value < 0) {
 			if(getRowAmount(row)>=1){
-      move(aktuelleReihe+9);
+      await move(aktuelleReihe+9);
 			}
-      await sleep(350);
-			sub(row+1, 1);
+      //await sleep(350);
+			await sub(row+1, 1);
       value =  10 - (value-amount);
       add(row, value);
     } else {
-      move(aktuelleReihe + (value + (9 - amount)));
+      await move(aktuelleReihe + (value + (9 - amount)));
     }
   }
+  return new Promise(resolve => setTimeout(resolve, 350));
 }
 
 async function move(index) {
@@ -159,4 +163,5 @@ async function move(index) {
     }
   }
   refresh();
+  return new Promise(resolve => setTimeout(resolve, 350));
 }

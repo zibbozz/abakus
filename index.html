@@ -5,6 +5,9 @@
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body onload="initialize();">
+		<div id="valueBox">
+			<span id="value">0</span>
+		</div>
 		<div id="abakus">
 			<div id="abakusLeft"></div>
 			<div id="abakusRight"></div>
@@ -76,10 +79,8 @@
 				</div>
 			</div>
 		</div>
-		<div id="valueBox">
-			<span id="value">0</span>
-		</div>
 		<div id="addBox">
+			<span id="value2">0</span>
 			<span id="addFieldBox"><input type="text" id="addField"></span>
 			<button id="addButton" onclick="totalAdd(document.getElementById('addField').value.replace(/ /g,''))">Rechnen</button>
 		</div>
