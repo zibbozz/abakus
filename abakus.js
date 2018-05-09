@@ -3,7 +3,6 @@
 */
 
 let row1 = [], row2 = [], row3 = [], row4 = [], row5 = [], rows = [];
-let row1full = false, row2full = false, row3full = false, row4full = false;
 let value = document.getElementById("value");
 
 function initialize(){
@@ -20,10 +19,7 @@ function initialize(){
 		row4[i].style.left = (i*4) + "%";
 		row5[i].style.left = (i*4) + "%";
 	}
-}
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+	rows = [row1, row2, row3, row4, row5];
 }
 
 function getAmount(){
@@ -51,42 +47,10 @@ function getAmount(){
 
 function getRowAmount(index){
 	let amount = 0;
-	switch(index){
-		case 1:
-			for(i = 0; i < 10; i++){
-				if(row1[i].classList.contains("active")){
-					amount++;
-				}
-			}
-		break;
-		case 2:
-		for(i = 0; i < 10; i++){
-			if(row2[i].classList.contains("active")){
-				amount++;
-			}
+	for(i = 0; i < 10; i++){
+		if(rows[index-1][i].classList.contains("active")){
+			amount++;
 		}
-		break;
-		case 3:
-		for(i = 0; i < 10; i++){
-			if(row3[i].classList.contains("active")){
-				amount++;
-			}
-		}
-		break;
-		case 4:
-		for(i = 0; i < 10; i++){
-			if(row4[i].classList.contains("active")){
-				amount++;
-			}
-		}
-		break;
-		case 5:
-		for(i = 0; i < 10; i++){
-			if(row5[i].classList.contains("active")){
-				amount++;
-			}
-		}
-		break;
 	}
 	return amount;
 }
@@ -145,122 +109,36 @@ function add(row, value){ //Row = angesprochene Reihe, Value = Anzahl der Kugeln
 function move(index){
 	let element = index % 10;
 	let row = Math.floor(index / 10);
+			if(element == 0 && getRowAmount(row)<10){
+				if(getRowAmount(row +1)<10){
+				for(i = element; i < 10; i++){
+					rows[row-1][i].style.left = (i * 4 + 60) + "%";
+					rows[row-1][i].classList.add("active");
+				}
+				setTimeout(function(){
+					for(i = 9; i >= 0; i--){
+						rows[row-1][i].style.left = (i * 4) + "%";
+						rows[row-1][i].classList.remove("active");
+					}
+					add(row+1, 1);
+				}, 350);
+			} else{
+				for(i = element; i < 10; i++){
+					rows[row-1][i].style.left = (i * 4 + 60) + "%";
+					rows[row-1][i].classList.add("active");
+				}
+			}
+			} else if(rows[row-1][element].classList.contains("active")){
+				for(i = element; i >= 0; i--){
+					rows[row-1][i].style.left = (i * 4) + "%";
+					rows[row-1][i].classList.remove("active");
+				}
 
-	switch(row){
-		case 1:
-			if(element == 0){
-				for(i = element; i < 10; i++){
-					row1[i].style.left = (i * 4 + 60) + "%";
-					row1[i].classList.add("active");
-				}
-				setTimeout(function(){
-					for(i = 9; i >= 0; i--){
-						row1[i].style.left = (i * 4) + "%";
-						row1[i].classList.remove("active");
-					}
-					add(2, 1);
-				}, 350);
-			} else if(row1[element].classList.contains("active")){
-				for(i = element; i >= 0; i--){
-					row1[i].style.left = (i * 4) + "%";
-					row1[i].classList.remove("active");
-				}
 			} else {
 				for(i = element; i < 10; i++){
-					row1[i].style.left = (i * 4 + 60) + "%";
-					row1[i].classList.add("active");
+					rows[row-1][i].style.left = (i * 4 + 60) + "%";
+					rows[row-1][i].classList.add("active");
 				}
 			}
-		break;
-		case 2:
-			if(element == 0){
-				for(i = element; i < 10; i++){
-					row2[i].style.left = (i * 4 + 60) + "%";
-					row2[i].classList.add("active");
-				}
-				setTimeout(function(){
-					for(i = 9; i >= 0; i--){
-						row2[i].style.left = (i * 4) + "%";
-						row2[i].classList.remove("active");
-					}
-					add(3, 1);
-				}, 350);
-			} else if(row2[element].classList.contains("active")){
-				for(i = element; i >= 0; i--){
-					row2[i].style.left = (i * 4) + "%";
-					row2[i].classList.remove("active");
-				}
-			} else {
-				for(i = element; i < 10; i++){
-					row2[i].style.left = (i * 4 + 60) + "%";
-					row2[i].classList.add("active");
-				}
-			}
-		break;
-		case 3:
-			if(element == 0){
-				for(i = element; i < 10; i++){
-					row3[i].style.left = (i * 4 + 60) + "%";
-					row3[i].classList.add("active");
-				}
-				setTimeout(function(){
-					for(i = 9; i >= 0; i--){
-						row3[i].style.left = (i * 4) + "%";
-						row3[i].classList.remove("active");
-					}
-					add(4, 1);
-				}, 350);
-			} else if(row3[element].classList.contains("active")){
-				for(i = element; i >= 0; i--){
-					row3[i].style.left = (i * 4) + "%";
-					row3[i].classList.remove("active");
-				}
-			} else {
-				for(i = element; i < 10; i++){
-					row3[i].style.left = (i * 4 + 60) + "%";
-					row3[i].classList.add("active");
-				}
-			}
-		break;
-		case 4:
-			if(element == 0){
-				for(i = element; i < 10; i++){
-					row4[i].style.left = (i * 4 + 60) + "%";
-					row4[i].classList.add("active");
-				}
-				setTimeout(function(){
-					for(i = 9; i >= 0; i--){
-						row4[i].style.left = (i * 4) + "%";
-						row4[i].classList.remove("active");
-					}
-					add(5, 1);
-				}, 350);
-			} else if(row4[element].classList.contains("active")){
-				for(i = element; i >= 0; i--){
-					row4[i].style.left = (i * 4) + "%";
-					row4[i].classList.remove("active");
-				}
-			} else {
-				for(i = element; i < 10; i++){
-					row4[i].style.left = (i * 4 + 60) + "%";
-					row4[i].classList.add("active");
-				}
-			}
-		break;
-		case 5:
-			if(row5[element].classList.contains("active")){
-				for(i = element; i >= 0; i--){
-					row5[i].style.left = (i * 4) + "%";
-					row5[i].classList.remove("active");
-				}
-			} else {
-				for(i = element; i < 10; i++){
-					row5[i].style.left = (i * 4 + 60) + "%";
-					row5[i].classList.add("active");
-				}
-			}
-		break;
-	}
-
 	refresh();
 }
