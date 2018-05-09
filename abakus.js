@@ -70,9 +70,10 @@ function refresh() {
 
 async function totalAdd(value) {
 	// Wieso replace hier nicht möglich?   #Frage
-  if (value[0] == '-') {
+  if (value[0] == '-' &&(getAmount()-parseInt(value))>= 0) {
     for (let i = 1; i < value.length; i++) {
-      //sub(i-1, parseInt(value.charAt(value.length-(i))));
+      sub(i, parseInt(value.charAt(value.length-(i))));
+			await sleep(350);
     }
   } else if ((value[0] == '+')&&(parseInt(value)+getAmount())<= 111110) {
     for (let i = 0; i < value.length; i++) {
@@ -81,6 +82,8 @@ async function totalAdd(value) {
     }
   }else if(parseInt(value)+getAmount() > 111110){
 		alert("Darf den gesamten Wert von 111110 nicht überschreiten!");
+	}else if(getAmount()-parseInt(value) < 0){
+		alert("Darf den gesamten Wert von 0 nicht unterschreiten!");
 	}
 	else {
     alert("Vorzeichen eingeben!");
@@ -96,30 +99,29 @@ async function add(row, value) { //Row = angesprochene Reihe, Value = Anzahl der
       await sleep(350);
       value -= (10 - amount);
       move(aktuelleReihe + (10 - value));
-      //Klappt nicht
     } else {
       move(aktuelleReihe + (10 - (value + amount)));
     }
   }
 }
 
-/*function sub(row, value){ //Row = angesprochene Reihe, Value = Anzahl der Kugeln die verschoben werden sollen
-		if (value < getAmount()) {
-		let amount = getRowAmount(row);
-		let aktuelleReihe = 10*row;
-		if (amount - value <= 0) {
-				move(aktuelleReihe+9);
-				setTimeout(function(){
-					move(aktuelleReihe + (10 - (value - amount)));
-				}, 350);
-			} else {
-				move(aktuelleReihe - (10 - (value - amount)));
+async function sub(row, value) { //Row = angesprochene Reihe, Value = Anzahl der Kugeln die verschoben werden sollen
+  if (value > 0 && row > 0) {
+    let amount = getRowAmount(row);
+    let aktuelleReihe = 10 * row;
+    if (amount - value < 0) {
+			if(getRowAmount(row)>=1){
+      move(aktuelleReihe+9);
 			}
-		}
-		else {
-			//Fehler
-		}
-	}*/
+      await sleep(350);
+			sub(row+1, 1);
+      value =  10 - (value-amount);
+      add(row, value);
+    } else {
+      move(aktuelleReihe + (value + (9 - amount)));
+    }
+  }
+}
 
 async function move(index) {
   let element = index % 10;
