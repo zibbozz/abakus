@@ -70,7 +70,7 @@ function refresh() {
 
 async function totalAdd(value) {
 	// Wieso replace hier nicht möglich?   #Frage
-  if (value[0] == '-' &&(getAmount()-parseInt(value))>= 0) {
+  if (value[0] == '-' && (getAmount()+parseInt(value))>= 0) {
     for (let i = 1; i < value.length; i++) {
       sub(i, parseInt(value.charAt(value.length-(i))));
 			await sleep(350);
@@ -82,7 +82,7 @@ async function totalAdd(value) {
     }
   }else if(parseInt(value)+getAmount() > 111110){
 		alert("Darf den gesamten Wert von 111110 nicht überschreiten!");
-	}else if(getAmount()-parseInt(value) < 0){
+	}else if(getAmount()+parseInt(value) < 0){
 		alert("Darf den gesamten Wert von 0 nicht unterschreiten!");
 	}
 	else {
