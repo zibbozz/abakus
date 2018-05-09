@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Abakus</title>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body onload="initialize();">
+		<div id="abakus">
+			<div id="abakusLeft"></div>
+			<div id="abakusRight"></div>
+			<div id="abakusInner">
+				<div id="row5" class="row">
+					<div class="rowpole"></div>
+					<div class="pearl" id="p50" onclick="move(50);"></div>
+					<div class="pearl" id="p51" onclick="move(51);"></div>
+					<div class="pearl" id="p52" onclick="move(52);"></div>
+					<div class="pearl" id="p53" onclick="move(53);"></div>
+					<div class="pearl" id="p54" onclick="move(54);"></div>
+					<div class="pearl" id="p55" onclick="move(55);"></div>
+					<div class="pearl" id="p56" onclick="move(56);"></div>
+					<div class="pearl" id="p57" onclick="move(57);"></div>
+					<div class="pearl" id="p58" onclick="move(58);"></div>
+					<div class="pearl" id="p59" onclick="move(59);"></div>
+				</div>
+				<div id="row4" class="row">
+					<div class="rowpole"></div>
+					<div class="pearl" id="p40" onclick="move(40);"></div>
+					<div class="pearl" id="p41" onclick="move(41);"></div>
+					<div class="pearl" id="p42" onclick="move(42);"></div>
+					<div class="pearl" id="p43" onclick="move(43);"></div>
+					<div class="pearl" id="p44" onclick="move(44);"></div>
+					<div class="pearl" id="p45" onclick="move(45);"></div>
+					<div class="pearl" id="p46" onclick="move(46);"></div>
+					<div class="pearl" id="p47" onclick="move(47);"></div>
+					<div class="pearl" id="p48" onclick="move(48);"></div>
+					<div class="pearl" id="p49" onclick="move(49);"></div>
+				</div>
+				<div id="row3" class="row">
+					<div class="rowpole"></div>
+					<div class="pearl" id="p30" onclick="move(30);"></div>
+					<div class="pearl" id="p31" onclick="move(31);"></div>
+					<div class="pearl" id="p32" onclick="move(32);"></div>
+					<div class="pearl" id="p33" onclick="move(33);"></div>
+					<div class="pearl" id="p34" onclick="move(34);"></div>
+					<div class="pearl" id="p35" onclick="move(35);"></div>
+					<div class="pearl" id="p36" onclick="move(36);"></div>
+					<div class="pearl" id="p37" onclick="move(37);"></div>
+					<div class="pearl" id="p38" onclick="move(38);"></div>
+					<div class="pearl" id="p39" onclick="move(39);"></div>
+				</div>
+				<div id="row2" class="row">
+					<div class="rowpole"></div>
+					<div class="pearl" id="p20" onclick="move(20);"></div>
+					<div class="pearl" id="p21" onclick="move(21);"></div>
+					<div class="pearl" id="p22" onclick="move(22);"></div>
+					<div class="pearl" id="p23" onclick="move(23);"></div>
+					<div class="pearl" id="p24" onclick="move(24);"></div>
+					<div class="pearl" id="p25" onclick="move(25);"></div>
+					<div class="pearl" id="p26" onclick="move(26);"></div>
+					<div class="pearl" id="p27" onclick="move(27);"></div>
+					<div class="pearl" id="p28" onclick="move(28);"></div>
+					<div class="pearl" id="p29" onclick="move(29);"></div>
+				</div>
+				<div id="row1" class="row">
+					<div class="rowpole"></div>
+					<div class="pearl" id="p10" onclick="move(10);"></div>
+					<div class="pearl" id="p11" onclick="move(11);"></div>
+					<div class="pearl" id="p12" onclick="move(12);"></div>
+					<div class="pearl" id="p13" onclick="move(13);"></div>
+					<div class="pearl" id="p14" onclick="move(14);"></div>
+					<div class="pearl" id="p15" onclick="move(15);"></div>
+					<div class="pearl" id="p16" onclick="move(16);"></div>
+					<div class="pearl" id="p17" onclick="move(17);"></div>
+					<div class="pearl" id="p18" onclick="move(18);"></div>
+					<div class="pearl" id="p19" onclick="move(19);"></div>
+				</div>
+			</div>
+		</div>
+		<div id="valueBox">
+			<span id="value">0</span>
+		</div>
+		<div id="addBox">
+			<span id="addFieldBox"><input type="text" id="addField"></span>
+			<button id="addButton" onclick="totalAdd(document.getElementById('addField').value)">Addieren</button>
+		</div>
+		<script src="abakus.js"></script>
+	</body>
+</html>
