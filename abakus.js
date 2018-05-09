@@ -68,16 +68,21 @@ function refresh() {
   value.innerHTML = getAmount();
 }
 
-function totalAdd(value) {
+async function totalAdd(value) {
+	// Wieso replace hier nicht möglich?   #Frage
   if (value[0] == '-') {
     for (let i = 1; i < value.length; i++) {
       //sub(i-1, parseInt(value.charAt(value.length-(i))));
     }
-  } else if ((value[0] == '+')) {
-    for (let i = 1; i < value.length; i++) {
-      add(i, parseInt(value.charAt(value.length - (i))));
+  } else if ((value[0] == '+')&&(parseInt(value)+getAmount())<= 111110) {
+    for (let i = 0; i < value.length; i++) {
+	 		add(i, parseInt(value.charAt(value.length - (i))));
+			await sleep(350);
     }
-  } else {
+  }else if(parseInt(value)+getAmount() > 111110){
+		alert("Darf den gesamten Wert von 111110 nicht überschreiten!");
+	}
+	else {
     alert("Vorzeichen eingeben!");
   }
 }
@@ -119,9 +124,7 @@ async function add(row, value) { //Row = angesprochene Reihe, Value = Anzahl der
 async function move(index) {
   let element = index % 10;
   let row = Math.floor(index / 10);
-  if (row < 5 && element == 0) { //Nicht ganz oben UND linkes Element
-    if (getRowAmount(row) < 10) { //aktuelle Reihe nicht voll
-
+  if (row < 5 && element == 0 && getRowAmount(row) < 10) { //Nicht ganz oben UND linkes Element UND aktuelle Reihe nicht voll
       if (getRowAmount(row + 1) < 10) { //nächste Reihe nicht voll
         for (i = element; i < 10; i++) {
           rows[row - 1][i].style.left = (i * 4 + 60) + "%";
@@ -140,7 +143,7 @@ async function move(index) {
         }
       }
 
-    }
+
   } else if (rows[row - 1][element].classList.contains("active")) { //ist Element rechts
     for (i = element; i >= 0; i--) {
       rows[row - 1][i].style.left = (i * 4) + "%";

@@ -81,7 +81,7 @@
 		</div>
 		<div id="addBox">
 			<span id="addFieldBox"><input type="text" id="addField"></span>
-			<button id="addButton" onclick="totalAdd(document.getElementById('addField').value)">Rechnen</button>
+			<button id="addButton" onclick="totalAdd(document.getElementById('addField').value.replace(/ /g,''))">Rechnen</button>
 		</div>
 		<script src="abakus.js"></script>
 	</body>
