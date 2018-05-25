@@ -1,45 +1,45 @@
 body{
-	margin:0px;
+	margin:0px; /* Entfernt Abstand zum Rand des Fensters */
 }
 
-#abakus{
+#abakus{ /* Der komplette Abakus */
+	position:absolute; /* Feste Vergabe von Positionen */
+	left:0px; /* Ganz links */
+	top:60px; /* 60 Pixel Abstand nach oben */
+	height:500px; /* Höhe von 500 Pixel */
+	width:800px; /* 800 Pixel breit */
+}
+
+#abakusLeft{ /* Linke Stange des Abakus */
 	position:absolute;
 	left:0px;
-	top:60px;
 	height:500px;
-	width:800px;
+	width:2%; /* Breite von 2% des Browserfensters */
+	background-color:rgb(158, 89, 47); /* Braune Färbung */
 }
 
-#abakusLeft{
+#abakusRight{ /* Rechte Stange des Abakus */
 	position:absolute;
-	left:0px;
+	right:0px; /* Ganz rechts */
 	height:500px;
 	width:2%;
 	background-color:rgb(158, 89, 47);
 }
 
-#abakusRight{
-	position:absolute;
-	right:0px;
-	height:500px;
-	width:2%;
-	background-color:rgb(158, 89, 47);
-}
-
-#abakusInner{
+#abakusInner{ /* Box zwischen den beiden Stangen */
 	position:absolute;
 	left:2%;
-	width:96%;
+	width:96%; /* Rechts und links Stangen mit 2% Breite */
 	height:500px;
 }
 
-.row{
+.row{ /* Reihe mit Stange und Kugeln */
 	position:absolute;
 	width:100%;
 	height:15%;
 }
 
-.rowpole{
+.rowpole{ /* Stange, auf der sich die Kugeln befinden */
 	position:absolute;
 	left:0px;
 	width:100%;
@@ -48,6 +48,7 @@ body{
 	top:35%;
 }
 
+/* Höhen der einzelnen Reihen */
 #row1{
 	top:85%;
 }
@@ -68,26 +69,26 @@ body{
 	top:0px;
 }
 
-.pearl{
+.pearl{ /* Kugeln */
 	position:absolute;
 	background-color:rgb(110, 173, 48);
 	height:100%;
 	width:4%;
-	border-radius:50%;
+	border-radius:50%; /* Abrundung der Ecken sodass es eine Kugel wird (Bzw Ellipse) */
 	left:0%;
-	transition: left 250ms linear;
+	transition: left 250ms linear; /* Linearer Übergang bei Veränderungen von left */
 }
 
-#valueBox{
+#valueBox{ /* Erste Anzeige des gesamten Wertes über dem Abakus */
 	position:absolute;
 	left:0px;
 	top:30px;
 	width:800px;
-	text-align:center;
+	text-align:center; /* Zentrierter Text */
 	height:30px;
 }
 
-#addBox{
+#addBox{ /* Zweite Anzeige des Wertes und Eingabe für Addition/Subtraktion */
 	position:absolute;
 	left:0px;
 	top:600px;
