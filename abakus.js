@@ -7,6 +7,14 @@ let row1 = [], // Array-Stange1
 // Elemente zum Anzeigen der Werte werden als Objekt initialisiert
 let value = document.getElementById("value");
 let value2 = document.getElementById("value2");
+let input = document.getElementById('addField');
+let cap = 99999; // Additions Obergrenze
+
+input.addEventListener("keyup", function(event) { // Enter ruft wie selbe Funktion auf, wie bei einem Klick auf den Button
+  if (event.keyCode === 13) { // Enter Taste
+    totalAdd(document.getElementById('addField').value.replace(/ /g, ''));
+  }
+});
 
 function sleep(ms) { // Funktion um einen Delay zu erstellen
   // Promise wird verwendet, wenn etwas asynchron ausgeführt werden muss. Es ist ein Platzhalter für Werte, welche
@@ -33,6 +41,25 @@ function initialize() {
   }
   // Macht aus den einzelnen Zeilen von Kugeln eine 2D Liste
   rows = [row1, row2, row3, row4, row5];
+}
+
+// Cap-Setter
+function setCap(newCap) {
+  if (newCap > 0 && newCap < 111111) { // Alles Andere kann nicht dargestellt werden
+    cap = newCap; // Setzt den neuen Cap-Wert
+  } else {
+    alert("Darf nur einen gesamten Wert von 0 bis 111110 besitzen!");
+  }
+}
+
+function right(index) {
+  // Schiebt die ganze Reihe nach rechts
+  // Benötigt da "move(X0)" für einen Automatischen Überlauf sorgen würde
+  for (i = 0; i < 10; i++) {
+    rows[index - 1][i].style.left = (i * 4 + 60) + "%";
+    rows[index - 1][i].classList.add("active");
+  }
+  return new Promise(resolve => setTimeout(resolve, 350));
 }
 
 // Rechnet den aktuellen Wert zusammen
@@ -84,24 +111,30 @@ function refresh() {
 // async bewirkt, dass der await befehlt innerhalb dieser Funktion vewendet werden kann
 async function totalAdd(value) {
   // Addiert die postitive oder negative Zahl zu dem Abakus
-  // Wieso replace der " " hier nicht möglich?   #Frage
+  // Wieso replace der " " hier nicht möglich? async??   #Frage
   if (value[0] == '-' && (getAmount() + parseInt(value)) >= 0) {
     // Fall einer negativen Zahl
     for (let i = 1; i < value.length; i++) {
       // Zieht jeder Reihe die entsprechende Anzahl an Kugeln ab (Überlauf rekusiv gelöst)
-      await sub(i, parseInt(value.charAt(value.length - (i))));
+      if (parseInt(value.charAt(value.length - (i))) > 0) {
+        // Wenn die Ziffer größer als 0 ist
+        await sub(i, parseInt(value.charAt(value.length - (i))));
+      }
       //Wartet auf sub-Rückgabe
     }
-  } else if ((value[0] == '+') && (parseInt(value) + getAmount()) <= 111110) {
+  } else if ((value[0] == '+') && (parseInt(value) + getAmount()) <= cap) {
     // Fall einer postitiven Zahl
-    for (let i = 0; i < value.length; i++) {
+    for (let i = 1; i < value.length; i++) {
       // Fügt jeder Reihe die entsprechende Anzahl an Kugeln hinzu (Überlauf rekusiv gelöst)
-      await add(i, parseInt(value.charAt(value.length - (i))));
-      //Wartet auf die Rückgabe der Funktion "add"
+      if (parseInt(value.charAt(value.length - (i))) > 0) {
+        // Wenn die Ziffer größer als 0 ist
+        await add(i, parseInt(value.charAt(value.length - (i))));
+      }
+      // Wartet auf die Rückgabe der Funktion "add"
     }
-  } else if (parseInt(value) + getAmount() > 111110) {
+  } else if (parseInt(value) + getAmount() > cap) {
     // Eingegebende Zahl zu groß
-    alert("Darf den gesamten Wert von 111110 nicht überschreiten!");
+    alert("Darf den gesamten Wert von " + cap + " nicht überschreiten!");
   } else if (getAmount() + parseInt(value) < 0) {
     // Eingegebende Zahl zu klein
     alert("Darf den gesamten Wert von 0 nicht unterschreiten!");
@@ -114,23 +147,31 @@ async function totalAdd(value) {
 // Fügt der entsprechenden Reihe die Anzahl der Kugeln hinzu
 async function add(row, value) {
   // Row = angesprochene Reihe, Value = Anzahl der Kugeln die verschoben werden sollen
-  if (row == 6 && value == 1 && getRowAmount(5) == 1){
+  if (row == 6 && value == 1 && getRowAmount(5) == 1) {
     // Wenn mehr 1000000 addiert werden und row 5 schon eine Kugel rechts hat
-    await move(50); // Alles nach rechts aus Reihe 5
-    if (getRowAmount(4) == 1 ) // Wenn Reihe 4 schon eine Kugel rechts hat
+    await right(5);
+    if (getRowAmount(4) == 1) // Wenn Reihe 4 schon eine Kugel rechts hat
     {
-      await move(40); // Alles nach rechts aus Reihe 4
-      if (getRowAmount(3) == 1 ) // Wenn Reihe 3 schon eine Kugel rechts hat
+      await right(4);
+      if (getRowAmount(3) == 1) // Wenn Reihe 3 schon eine Kugel rechts hat
       {
-        await move(30); // Alles nach rechts aus Reihe 3
-        if (getRowAmount(2) == 1 ) // Wenn Reihe 2 schon eine Kugel rechts hat
+        await right(3);
+        if (getRowAmount(2) == 1) // Wenn Reihe 2 schon eine Kugel rechts hat
         {
-        await move(20); // Alles nach rechts aus Reihe 2
-        await move(10); // Alles nach rechts aus Reihe 1
-      } else {move(20);} // Alles nach rechts aus Reihe 2
-    } else {move(30);} // Alles nach rechts aus Reihe 3
-  } else{ move(40);} // Alles nach rechts aus Reihe 4
-  } else if (row == 6 && value == 1){move(50);}// Wenn mehr 1000000 addiert werden
+          await right(2);
+          await right(1);
+        } else {
+          right(2);
+        }
+      } else {
+        right(3);
+      }
+    } else {
+      right(4);
+    }
+  } else if (row == 6 && value == 1) {
+    await right(5);
+  } // Wenn mehr 1000000 addiert werden
   // Normalfall Addierung:
   if (value > 0 && row > 0 && row <= 5) {
     // Wenn Wert + Reihe gültig ist
@@ -153,7 +194,7 @@ async function sub(row, value) {
   if (row > 1 && value > 0 && getRowAmount(row - 1) == 10) {
     // Falls die Zeile dadrunter voll ist
     await sub(row - 1, 10); // Dort 10 abziehen
-    value -= 1;             // Hier 1 weniger Abziehen
+    value -= 1; // Hier 1 weniger Abziehen
   }
   if (value > 0 && row > 0 && row <= 5) { // Wenn es was zum abziehen gibt und es in einer gültigen Reihe ist
     // Liest die Reihe und Spalte aus der Variable index. 10er Stellen sind die Reihen, 1er Stellen die Kugeln
@@ -164,9 +205,10 @@ async function sub(row, value) {
       if (getRowAmount(row) >= 1) { // Wenn mindestens eine Kugel links in der Reihe
         await move(aktuelleReihe + 9); // Alle Elemente nach Links
       }
-      await sub(row + 1, 1); // Subtrahiert 1 von der nächsten Zeile
-      value = 10 - (value - amount); // Berechnet den neuen Wert
-      add(row, value); // Addiert den berechneten Wert zu der Reihe
+      await sub(row + 1, 1); // Subtrahiert 1 von der höheren Zeile
+      await right(row); // Bekommt dafür 10 Kugeln in der Aktuellen Zeile
+      value = value - amount; // Berechnet den Rest der Abgezogen werden muss
+      await sub(row, value); // Zieht den Rest ab
     } else {
       await move(aktuelleReihe + (value + (9 - amount))); // Zieht den Wert von der Reihe ab
     }
@@ -188,7 +230,7 @@ async function move(index) {
         rows[row - 1][i].style.left = (i * 4 + 60) + "%";
         rows[row - 1][i].classList.add("active");
       }
-      await sleep(350);
+      await sleep(350); // Wartet auf die Animation
 
       // Alle Elemente nach links
       for (i = 9; i >= 0; i--) {
@@ -197,18 +239,21 @@ async function move(index) {
       }
       add(row + 1, 1);
     } else { //nächste Reihe voll
+      // Nach Rechts schieben ab element
       for (i = element; i < 10; i++) {
         rows[row - 1][i].style.left = (i * 4 + 60) + "%";
         rows[row - 1][i].classList.add("active");
       }
     }
   } else if (rows[row - 1][element].classList.contains("active")) { //ist Element rechts
+    // Nach links schieben bis element
     for (i = element; i >= 0; i--) {
       rows[row - 1][i].style.left = (i * 4) + "%";
       rows[row - 1][i].classList.remove("active");
     }
 
   } else { //Sonst
+    // Nach Rechts schieben ab element
     for (i = element; i < 10; i++) {
       rows[row - 1][i].style.left = (i * 4 + 60) + "%";
       rows[row - 1][i].classList.add("active");

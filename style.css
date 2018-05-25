@@ -1,5 +1,7 @@
 body{
 	margin:0px; /* Entfernt Abstand zum Rand des Fensters */
+	background-color:rgb(50,50,50);
+	color:#FFFFFF;
 }
 
 #abakus{ /* Der komplette Abakus */
@@ -14,36 +16,36 @@ body{
 	position:absolute;
 	left:0px;
 	height:500px;
-	width:2%; /* Breite von 2% des Browserfensters */
-	background-color:rgb(158, 89, 47); /* Braune Färbung */
+	width:3%; /* Breite von 2% des Browserfensters */
+	background-color:rgb(179,114,82); /* Braune Färbung */
 }
 
 #abakusRight{ /* Rechte Stange des Abakus */
 	position:absolute;
 	right:0px; /* Ganz rechts */
 	height:500px;
-	width:2%;
-	background-color:rgb(158, 89, 47);
+	width:3%;
+	background-color:rgb(179,114,82);
 }
 
 #abakusInner{ /* Box zwischen den beiden Stangen */
 	position:absolute;
-	left:2%;
-	width:96%; /* Rechts und links Stangen mit 2% Breite */
+	left:3%;
+	width:94%; /* Rechts und links Stangen mit 2% Breite */
 	height:500px;
 }
 
 .row{ /* Reihe mit Stange und Kugeln */
 	position:absolute;
 	width:100%;
-	height:15%;
+	height:10%;
 }
 
 .rowpole{ /* Stange, auf der sich die Kugeln befinden */
 	position:absolute;
 	left:0px;
 	width:100%;
-	background-color:rgb(158, 89, 47);
+	background-color:rgb(233,211,187);
 	height:30%;
 	top:35%;
 }
@@ -77,6 +79,25 @@ body{
 	border-radius:50%; /* Abrundung der Ecken sodass es eine Kugel wird (Bzw Ellipse) */
 	left:0%;
 	transition: left 250ms linear; /* Linearer Übergang bei Veränderungen von left */
+}
+
+.pgruen{
+	background-color:rgb(40,78,63);
+}
+
+.pweiss{
+	background-color:rgb(253,254,249);
+}
+
+.pblau{
+	background-color:rgb(47,79,128);
+}
+
+.prot{
+	background-color:rgb(210,35,18);
+}
+.pgelb{
+	background-color:rgb(242, 231, 126);
 }
 
 #valueBox{ /* Erste Anzeige des gesamten Wertes über dem Abakus */
